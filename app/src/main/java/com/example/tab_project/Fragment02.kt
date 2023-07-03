@@ -58,12 +58,11 @@ class Fragment02 : Fragment() {
         val imageAdapter = ImageAdapter(requireContext(),imageIds)
         binding.myGridView.adapter = imageAdapter
 
-
-        binding.myGridView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-            val intent = Intent(requireContext(), MainActivity2::class.java)
-            intent.putExtra("imageId", imageIds[position])
-            startActivity(intent)
-        }
+//        binding.myGridView.onItemClickListener =
+//            AdapterView.OnItemClickListener { parent, view, position, id ->
+//            val intent = Intent(requireContext(), MainActivity2::class.java)
+//            intent.putExtra("imageId", imageIds[position])
+//            startActivity(intent)
+//        }
     }
 }
