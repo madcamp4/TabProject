@@ -41,7 +41,6 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     inner class ExpandedItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tv_name: TextView = itemView.findViewById(R.id.tvContactName)
         var tv_number: TextView = itemView.findViewById(R.id.tvContactNumber)
-        var tv_ID: TextView = itemView.findViewById(R.id.tvID)
 
         var btn_call: Button = itemView.findViewById(R.id.btnCall)
         var btn_message: Button = itemView.findViewById(R.id.btnMessage)
@@ -51,7 +50,6 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         fun bind(item: ContactData) {
             tv_name.text = item.name
             tv_number.text = item.number
-            tv_ID.text = item.id
 
             btn_call.setOnClickListener {
                 Toast.makeText(context, "calling the number ${item.number}", Toast.LENGTH_SHORT).show()
