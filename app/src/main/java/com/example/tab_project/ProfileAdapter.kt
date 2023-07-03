@@ -41,6 +41,18 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
             val intent = Intent(context, MainActivity2::class.java)
             intent.putExtra("imageId", imageId)
             context.startActivity(intent)
+
+        }
+
+        holder.overlayImage1.setOnClickListener {
+            holder.overlayImage1.visibility = View.GONE
+            holder.overlayImage2.visibility = View.VISIBLE
+            notifyDataSetChanged()
+        }
+        holder.overlayImage2.setOnClickListener {
+            holder.overlayImage1.visibility = View.VISIBLE
+            holder.overlayImage2.visibility = View.GONE
+            notifyDataSetChanged()
         }
 
 //        binding.myGridView.onItemClickListener =
@@ -55,6 +67,10 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
     //    class GridAdapter(val layout: View): RecyclerView.ViewHolder(layout)
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val overlayImage1 = itemView.findViewById<ImageView>(R.id.overlayImage1)
+        val overlayImage2 = itemView.findViewById<ImageView>(R.id.overlayImage2)
+
 
         private val imgProfile: ImageView = itemView.findViewById(R.id.img_rv_photo)
 
