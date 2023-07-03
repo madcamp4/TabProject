@@ -1,7 +1,6 @@
 package com.example.tab_project
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentUris
@@ -24,6 +23,7 @@ import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.contentColorFor
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -36,41 +36,24 @@ class Fragment01 : Fragment(){
     lateinit var contactAdapter : ContactAdapter
 
     //intent가 끝난 후에 showContacts를 다시 실행하도록 contract 생성
-    @SuppressLint("Range")
     val addContactContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val intent = result.data
-            val contactUri = intent?.data
-
-            if (contactUri != null) {
-                val contactId = ContentUris.parseId(contactUri)
-                val contactCursor = context?.contentResolver?.query(
-                    ContactsContract.Data.CONTENT_URI,
-                    arrayOf(
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                    ),
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                    arrayOf(contactId.toString()),
-                    null
-                )
-
-                if (contactCursor != null && contactCursor.moveToFirst()) {
-                    val contactName =
-                        contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                    val contactNumber =
-                        contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-
-                    // Use the contact ID, name, and number as needed
-                    val newContact = ContactData(contactId, contactName, contactNumber)
-
-                }
-
-                contactCursor?.close()
-            }
+            // Contact added successfully, run your function here
+            // You can access the intent data if needed: result.data
+            //contactAdapter.updateDataset()
+            contactAdapter.addContactInAdapter() //contactAdapter 속의 데이터 수정
         }
     }
 
+    //intent가 끝난 후에 showContacts를 다시 실행하도록 contract 생성
+    val editContactContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Contact added successfully, run your function here
+            // You can access the intent data if needed: result.data
+            //contactAdapter.updateDataset()
+            contactAdapter.addContactInAdapter() //contactAdapter 속의 데이터 수정
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +73,13 @@ class Fragment01 : Fragment(){
         } else {
             requestPermissions() //ask for permission
         }
+    }
+
+    //intent에서 원래 fragment으로 돌아오면 dataset 업데이트
+    override fun onResume() {
+        super.onResume()
+
+        contactAdapter.updateDataset()
     }
 
     private fun showContacts() {
@@ -120,6 +110,13 @@ class Fragment01 : Fragment(){
             }
         })
 
+        contactAdapter.setEditClickListerer(object: ContactAdapter.OnEditClickListener{
+            override fun onClick(v: View, position: Int) {
+                val id = contactAdapter.contactsList[position].id
+                editContact(id, position)
+            }
+        })
+
         //핸드폰의 연락처와 contacts를 연동시킴
         binding.btnSyncContacts.setOnClickListener {
             contactAdapter.updateDataset()
@@ -128,7 +125,6 @@ class Fragment01 : Fragment(){
         //핸드폰의 연락처에 새 연락처를 추가 후 창 업데이트
         binding.btnAddContact.setOnClickListener {
             addContacts()
-            contactAdapter.updateDataset()
         }
     }
 
@@ -139,18 +135,12 @@ class Fragment01 : Fragment(){
             type = ContactsContract.RawContacts.CONTENT_TYPE
         }
 
-        contactAdapter.addContactInAdapter()
-
-        addContactContract.launch(intent)
+        addContactContract.launch(intent) //연락처 수정하는 intent 실행
+        //contactAdapter.addContactInAdapter() //contactAdapter 속의 데이터 수정
     }
 
-    private fun getContactUriFromContactId(ContactId: String): Uri? {
-        val baseUri: Uri = ContactsContract.Contacts.CONTENT_URI
-        val contactId: Long = ContactId.toLongOrNull() ?: return null
-        return ContentUris.withAppendedId(baseUri, contactId)
-    }
 
-    private fun editContact(target_id: String?) {
+    private fun editContact(target_id: String?, position: Int) {
         //target_id를 editIntent에 사용할 수 있는 ContactURI로 변환
         val selectedContactUri = target_id?.let { getContactUriFromContactId(it) }
 
@@ -160,9 +150,8 @@ class Fragment01 : Fragment(){
         }
         editIntent.putExtra("finishActivityOnSaveCompleted", true) //오류 방지를 위한 추가 플래그
 
-        contactAdapter.editContactInAdapter()
-
-        addContactContract.launch(editIntent)
+        addContactContract.launch(editIntent) //연락처 수정하는 intent 실행
+        contactAdapter.editContactInAdapter(position) //contactAdapter 속의 데이터 수정
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -186,13 +175,17 @@ class Fragment01 : Fragment(){
             ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_CONTACTS)
         } == PackageManager.PERMISSION_GRANTED
 
-        return readContactsPermission && writeContactsPermission
+        val callContactsPermission = context?.let {
+            ContextCompat.checkSelfPermission(it, Manifest.permission.CALL_PHONE)
+        } == PackageManager.PERMISSION_GRANTED
+
+        return readContactsPermission && writeContactsPermission && callContactsPermission
     }
 
 
     //read_contacts와 write_contacts에 대한 권한을 요청
     private fun requestPermissions() {
-        val permissions = arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
+        val permissions = arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS, Manifest.permission.CALL_PHONE)
         ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSIONS_REQUEST_CONTACTS)
     }
 
@@ -210,6 +203,12 @@ class Fragment01 : Fragment(){
         }
     }
 
+}
+
+fun getContactUriFromContactId(ContactId: String): Uri? {
+    val baseUri: Uri = ContactsContract.Contacts.CONTENT_URI
+    val contactId: Long = ContactId.toLongOrNull() ?: return null
+    return ContentUris.withAppendedId(baseUri, contactId)
 }
 
 fun getContacts(context: Context): MutableList<ContactData> {
@@ -247,6 +246,8 @@ fun getContacts(context: Context): MutableList<ContactData> {
         }
         it.close()
     }
+
+    datas.sortBy { it.name }
 
     return datas
 }
