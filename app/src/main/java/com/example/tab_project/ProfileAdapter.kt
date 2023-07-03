@@ -1,6 +1,7 @@
 package com.example.tab_project
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,12 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
 
     override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
         holder.bind(datas[position])
+        holder.itemView.setOnClickListener {
+            Log.i("ssss",position.toString())
+        }
     }
+
+    //    class GridAdapter(val layout: View): RecyclerView.ViewHolder(layout)
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
