@@ -10,15 +10,21 @@ import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.contentColorFor
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+
 
 class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var contactsList : MutableList<ContactData> =  getContacts(context)
+
+    lateinit var storedContactsList : MutableList<ContactData>
 
     //"hold views" - itemview 안에 있는 여러 view들을 속성으로 가지고 있음
     //recyclerview.viewholder에서 상속받음
@@ -37,10 +43,40 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         var tv_number: TextView = itemView.findViewById(R.id.tvContactNumber)
         var tv_ID: TextView = itemView.findViewById(R.id.tvID)
 
+        var btn_call: Button = itemView.findViewById(R.id.btnCall)
+        var btn_message: Button = itemView.findViewById(R.id.btnMessage)
+        var btn_edit: Button = itemView.findViewById(R.id.btnEdit)
+        var btn_share: Button = itemView.findViewById(R.id.btnShare)
+
         fun bind(item: ContactData) {
             tv_name.text = item.name
             tv_number.text = item.number
             tv_ID.text = item.id
+
+            btn_call.setOnClickListener {
+                Toast.makeText(context, "calling the number ${item.number}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Intent.ACTION_CALL)
+                intent.data = Uri.parse("tel:${item.number}")
+                startActivity(context, intent, null)
+            }
+
+            btn_message.setOnClickListener {
+                Toast.makeText(context, "messaging the number ${item.number}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("smsto:${item.number}")
+                startActivity(context, intent, null)
+            }
+
+            btn_share.setOnClickListener {
+                Toast.makeText(context, "sharing the number ${item.number}", Toast.LENGTH_SHORT).show()
+                val contactUri = item.id?.let { it1 -> getContactUriFromContactId(it1) }
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = ContactsContract.Contacts.CONTENT_VCARD_TYPE
+                intent.putExtra(Intent.EXTRA_STREAM, item.number)
+                startActivity(context, Intent.createChooser(intent, "Share Contact"), null)
+            }
+
         }
     }
 
@@ -71,15 +107,20 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
             }
             else -> {
                 (holder as ExpandedItemViewHolder).bind(contactsList[position])
+
+                //expanded view에서 edit button 연결
+                holder.btn_edit.setOnClickListener {
+                    editClickListener.onClick(it, position)
+                }
             }
         }
 
-        //해당 viewholder에 담긴 item click시 onClick() 에서 정의된 이벤트 실행
+        //해당 viewholder에 담긴 itemView click시 onClick() 에서 정의된 이벤트 실행
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
 
-        //해당 viewholder에 담긴 item longclick시 onLongClick()에서 정의된 이벤트 실행
+        //해당 viewholder에 담긴 itemView longclick시 onLongClick()에서 정의된 이벤트 실행
         holder.itemView.setOnLongClickListener {
             itemLongClickListener.onLongClick(it, position)
             true
@@ -95,6 +136,15 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     //클래스 외부에서 클릭 이벤트 설정할 수 있도록
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
+    }
+
+    interface OnEditClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    private lateinit var editClickListener: OnEditClickListener
+    fun setEditClickListerer(onEditClickListener: OnEditClickListener) {
+        this.editClickListener = onEditClickListener
     }
 
     //longClick에 대한 리스너 인터페이스 - 연락처 제거
@@ -116,18 +166,38 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         notifyDataSetChanged()
     }
 
-
-    fun addContactInAdapter() {
-        contactsList.add()
+    //creates backup of the contactslist
+    private fun setViewModesList() {
+        storedContactsList = contactsList
     }
 
-    fun editContactInAdapter() {
+    //restore the viewmode attributes of the contactslist using the stored viewmodeslist
+    private fun getViewModesList() {
+        for (contact in contactsList) {
+            for (storedContact in storedContactsList) {
+                if (contact.id == storedContact.id) {
+                    contact.viewMode = storedContact.viewMode
+                }
+            }
+        }
+    }
 
+    fun addContactInAdapter() {
+        setViewModesList()
+        contactsList = getContacts(context)
+        getViewModesList()
+        notifyDataSetChanged()
+    }
+
+    fun editContactInAdapter(position: Int) {
+        setViewModesList()
+        contactsList = getContacts(context)
+        getViewModesList()
+        notifyItemChanged(position)
     }
 
     fun removeContactInAdapter(position: Int) {
         contactsList.removeAt(position)
-
         notifyItemRemoved(position)
     }
 
