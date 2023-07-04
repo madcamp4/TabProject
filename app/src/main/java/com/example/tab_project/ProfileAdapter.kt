@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
-import androidx.core.content.ContentProviderCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -38,7 +35,7 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
         holder.itemView.setOnClickListener {
             Log.i("ssss",position.toString())
             val imageId = imageIds[position]
-            val intent = Intent(context, MainActivity2::class.java)
+            val intent = Intent(context, ImgViewActivity::class.java)
             intent.putExtra("imageId", imageId)
             context.startActivity(intent)
 

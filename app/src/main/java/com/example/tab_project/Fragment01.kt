@@ -154,7 +154,7 @@ class Fragment01 : Fragment(){
         contactAdapter.editContactInAdapter(position) //contactAdapter 속의 데이터 수정
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
+
     private fun removeContact(target_id: String?, position: Int) {
         val selectedContactUri = target_id?.let { getContactUriFromContactId(it) }
 

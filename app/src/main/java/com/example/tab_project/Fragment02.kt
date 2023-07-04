@@ -47,16 +47,16 @@ class Fragment02 : Fragment() {
             add(ProfileData(img = R.drawable.img_5_right))
         }
 
-        val imageIds = intArrayOf(
-            R.drawable.img_1_right,
-            R.drawable.img_2_right,
-            R.drawable.img_3_right,
-            R.drawable.img_4_right,
-            R.drawable.img_5_right,
-        )
-
-        val imageAdapter = ImageAdapter(requireContext(),imageIds)
-        binding.myGridView.adapter = imageAdapter
+//        val imageIds = intArrayOf(
+//            R.drawable.img_1_right,
+//            R.drawable.img_2_right,
+//            R.drawable.img_3_right,
+//            R.drawable.img_4_right,
+//            R.drawable.img_5_right,
+//        )
+//
+//        val imageAdapter = ImageAdapter(requireContext(),imageIds)
+//        binding.myGridView.adapter = imageAdapter
 
 //        binding.myGridView.onItemClickListener =
 //            AdapterView.OnItemClickListener { parent, view, position, id ->
