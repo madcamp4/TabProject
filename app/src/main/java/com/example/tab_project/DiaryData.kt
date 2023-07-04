@@ -9,5 +9,6 @@ class DiaryData(
     var title: String? = null,
     var content: String? = null,
     var icon: Int? = null,
+    var isFavorite: Boolean = false,
     var viewMode: Int = SHORT
 )
