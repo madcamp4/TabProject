@@ -122,10 +122,9 @@ class DiaryActivity : AppCompatActivity() {
         val editDiaryIntent = Intent(this, EditDiaryActivity::class.java)
         editDiaryIntent.putExtra("position", position)
 
-        //editDiaryIntent.put
-
         Toast.makeText(this, "editing position $position", Toast.LENGTH_SHORT).show()
-        editDiaryContract.launch(editDiaryIntent) //일기 추가하는 창으로 이동
+
+        startActivity(editDiaryIntent)
     }
 
     private fun toast(text: String) {
@@ -169,6 +168,8 @@ class DiaryActivity : AppCompatActivity() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     toast("Deleted item $position")
+                    diaryAdapter.DiaryList.removeAt(position)
+                    diaryAdapter.notifyItemRemoved(position)
                 }
             })
     }

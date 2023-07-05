@@ -15,6 +15,7 @@ class DiaryAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
 
     lateinit var DiaryList : MutableList<DiaryData>
 
+
     override fun getItemViewType(position: Int): Int {
         return DiaryList[position].viewMode
     }
@@ -69,18 +70,9 @@ class DiaryAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         this.itemClickListener = onItemClickListener
     }
 
-//    private lateinit var swipeTouchListener: OnSwipeTouchListener
-//    fun setSwipeTouchListener(onSwipeTouchListener: OnSwipeTouchListener) {
-//        this.swipeTouchListener = onSwipeTouchListener
-//    }
-
-
-
     override fun getItemCount(): Int {
         return DiaryList.size
     }
-
-
 
     open inner class ShortViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
