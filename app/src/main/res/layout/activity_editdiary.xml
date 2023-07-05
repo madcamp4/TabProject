@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SingleDiaryActivity">
+    tools:context=".AddDiaryActivity">
 
     <ImageButton
-        android:id="@+id/btnReturn"
+        android:id="@+id/btnCancelEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,16 +16,16 @@
         android:contentDescription="현재 작성하고 있는 일기 취소"/>
 
     <Button
-        android:id="@+id/btnEdit"
+        android:id="@+id/btnSaveEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수정"
+        android:text="저장"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="현재 작성하고 있는 일기 저장"/>
 
-    <TextView
-        android:id="@+id/tvDiaryDate"
+    <EditText
+        android:id="@+id/etDiaryDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
@@ -39,8 +39,8 @@
         android:minWidth="48dp"
         android:minHeight="48dp"/>
 
-    <TextView
-        android:id="@+id/tvDiaryTitle"
+    <EditText
+        android:id="@+id/etDiaryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -50,12 +50,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.208"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiaryDate"
+        app:layout_constraintTop_toBottomOf="@+id/etDiaryDate"
         android:minWidth="48dp"
         android:minHeight="48dp"/>
 
-    <TextView
-        android:id="@+id/tvDiaryContent"
+    <EditText
+        android:id="@+id/etDiaryContent"
         android:layout_width="324dp"
         android:layout_height="219dp"
         android:layout_marginTop="60dp"
@@ -65,7 +65,7 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiaryTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/etDiaryTitle" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -75,7 +75,7 @@
         android:layout_marginTop="116dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvDiaryDate"
+        app:layout_constraintStart_toEndOf="@+id/etDiaryDate"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 

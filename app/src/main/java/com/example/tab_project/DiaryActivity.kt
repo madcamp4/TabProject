@@ -16,11 +16,13 @@ import com.example.tab_project.databinding.ActivityAdddiaryBinding
 import com.example.tab_project.databinding.ActivityDiaryBinding
 import java.time.LocalDate
 
+
 class DiaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryBinding
-    private lateinit var diaryAdapter: DiaryAdapter
+    lateinit var diaryAdapter: DiaryAdapter
 
-    private lateinit var addDiaryContract: ActivityResultLauncher<Intent>
+    //private lateinit var addDiaryContract: ActivityResultLauncher<Intent>
+    private lateinit var editDiaryContract: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +30,9 @@ class DiaryActivity : AppCompatActivity() {
         binding = ActivityDiaryBinding.inflate(layoutInflater) //activity.xml을 참조할 수 있도록 만든 binding class
         setContentView(binding.root)
 
-        var diaryAdapter = DiaryAdapter(this)
+        diaryAdapter = DiaryAdapter(this)
+        DiaryAdapterSingleton.diaryAdapter = diaryAdapter // set global singleton object
+
         binding.rvDiary.adapter = diaryAdapter
         binding.rvDiary.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
@@ -41,7 +45,9 @@ class DiaryActivity : AppCompatActivity() {
         // AddDiary 클릭시 새 일기 작성 activity로 넘어감
         binding.btnAddDiary.setOnClickListener {
             val intent = Intent(this, AddDiaryActivity::class.java)
-            addDiaryContract.launch(intent) //일기 추가하는 창으로 이동
+            //addDiaryContract.launch(intent) //일기 추가하는 창으로 이동
+
+            startActivity(intent)
         }
 
         // 클릭시 일기 메인 페이지로 이동
@@ -68,7 +74,22 @@ class DiaryActivity : AppCompatActivity() {
 
 
         // adddiary activity가 끝난 이후에 해당 페이지에서 얻은 데이터를 통해 데이터셋에 넣음
-        addDiaryContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ) { result ->
+//        addDiaryContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ) { result ->
+//            if (result.resultCode == Activity.RESULT_OK) { //activity가 제대로 종료되었으면 안에 있는 코드 실행
+//                val newDiaryData = DiaryData(
+//                    result.data?.getStringExtra("date"),
+//                    result.data?.getStringExtra("title"),
+//                    result.data?.getStringExtra("content"),
+//                    result.data?.getIntExtra("icon", 0))
+//
+//                if (diaryAdapter != null) {
+//                    diaryAdapter.DiaryList.add(newDiaryData)
+//                    diaryAdapter.notifyDataSetChanged()
+//                }
+//            }
+//        }
+
+        editDiaryContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ) { result ->
             if (result.resultCode == Activity.RESULT_OK) { //activity가 제대로 종료되었으면 안에 있는 코드 실행
                 val newDiaryData = DiaryData(
                     result.data?.getStringExtra("date"),
@@ -76,9 +97,11 @@ class DiaryActivity : AppCompatActivity() {
                     result.data?.getStringExtra("content"),
                     result.data?.getIntExtra("icon", 0))
 
+                val position = result.data?.getIntExtra("position", 0)
+
                 if (diaryAdapter != null) {
-                    diaryAdapter.DiaryList.add(newDiaryData)
-                    diaryAdapter.notifyDataSetChanged()
+                    diaryAdapter.DiaryList[position!!] = newDiaryData
+                    diaryAdapter.notifyItemChanged(position)
                 }
             }
         }
@@ -88,8 +111,21 @@ class DiaryActivity : AppCompatActivity() {
         val openDiaryIntent = Intent(this, SingleDiaryActivity::class.java)
         openDiaryIntent.putExtra("position", position)
 
-        Toast.makeText(this, "opening position $position", Toast.LENGTH_SHORT).show()
-        addDiaryContract.launch(openDiaryIntent) //일기 추가하는 창으로 이동
+        println(position)
+        toast("opening position $position")
+
+        startActivity(openDiaryIntent)
+        //addDiaryContract.launch(openDiaryIntent) //일기 하나들 보는 창으로 이동
+    }
+
+    private fun editDiary(position: Int) {
+        val editDiaryIntent = Intent(this, EditDiaryActivity::class.java)
+        editDiaryIntent.putExtra("position", position)
+
+        //editDiaryIntent.put
+
+        Toast.makeText(this, "editing position $position", Toast.LENGTH_SHORT).show()
+        editDiaryContract.launch(editDiaryIntent) //일기 추가하는 창으로 이동
     }
 
     private fun toast(text: String) {
@@ -119,6 +155,7 @@ class DiaryActivity : AppCompatActivity() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     toast("Marked as edited item $position")
+                    editDiary(position)
                 }
             })
     }

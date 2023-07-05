@@ -27,7 +27,16 @@
             android:name=".ImgViewActivity"
             android:exported="false" />
         <activity
+            android:name=".DiaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddDiaryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SingleDiaryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditDiaryActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
