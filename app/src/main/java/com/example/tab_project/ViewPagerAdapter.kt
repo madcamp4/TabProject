@@ -9,7 +9,7 @@ private const val NUM_TABS = 3
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
-    override fun getItemCount(): Int = NUM_TABS
+    override fun getItemCount(): Int =  NUM_TABS  //총 Fragment의 개수
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
