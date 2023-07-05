@@ -28,7 +28,9 @@ class AddDiaryActivity : AppCompatActivity() {
 
             val intent = Intent()
 
+
             println("finishedd")
+
 
             intent.apply {
                 putExtra("date", date)
@@ -37,7 +39,9 @@ class AddDiaryActivity : AppCompatActivity() {
                 putExtra("icon", 1)
             }
             setResult(Activity.RESULT_OK, intent)
+
             println("finishedd2")
+
             finish()
 
         }

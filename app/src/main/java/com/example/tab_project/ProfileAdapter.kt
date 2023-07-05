@@ -2,6 +2,7 @@ package com.example.tab_project
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,32 +33,35 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
         )
 
         holder.bind(datas[position])
+
         holder.itemView.setOnClickListener {
-            Log.i("ssss",position.toString())
-            val imageId = imageIds[position]
-            val intent = Intent(context, ImgViewActivity::class.java)
-            intent.putExtra("imageId", imageId)
-            context.startActivity(intent)
+
+            var item = datas[position]
+            if (item.img is Int) {
+                // 정수형 리소스 ID인 경우
+                val imageId = item.img as Int
+                val intent = Intent(context, ImgViewActivity::class.java)
+                intent.putExtra("imageId", imageId)
+                context.startActivity(intent)
+            } else if (item.img is Uri) {
+                // URI인 경우
+                val uri = item.img as Uri
+                val intent = Intent(context, ImgViewActivity::class.java)
+                intent.putExtra("imageUri", uri)
+                context.startActivity(intent)
+                // 원하는 처리를 수행
+            }
 
         }
 
         holder.overlayImage1.setOnClickListener {
             holder.overlayImage1.visibility = View.GONE
             holder.overlayImage2.visibility = View.VISIBLE
-            notifyDataSetChanged()
         }
         holder.overlayImage2.setOnClickListener {
             holder.overlayImage1.visibility = View.VISIBLE
             holder.overlayImage2.visibility = View.GONE
-            notifyDataSetChanged()
         }
-
-//        binding.myGridView.onItemClickListener =
-//            AdapterView.OnItemClickListener { parent, view, position, id ->
-//                val intent = Intent(ContentProviderCompat.requireContext(), MainActivity2::class.java)
-//                intent.putExtra("imageId", imageIds[position])
-//                ContextCompat.startActivity(intent)
-//            }
 
     }
 
@@ -73,7 +77,17 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
 
         fun bind(item: ProfileData) {
 
-            Glide.with(itemView).load(item.img).into(imgProfile)
+            when (item.img) {
+                is Int -> {
+                    // 정수형 리소스 ID인 경우
+                    Glide.with(itemView).load(item.img as Int).into(imgProfile)
+                }
+                is Uri -> {
+                    // URI인 경우
+                    Glide.with(itemView).load(item.img as Uri).into(imgProfile)
+                }
+                // 다른 유형의 이미지 처리에 대한 로직을 추가할 수 있습니다.
+            }
 
         }
     }

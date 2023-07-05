@@ -1,10 +1,13 @@
 package com.example.tab_project
 
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
 
 class ImgViewActivity : AppCompatActivity() {
     private lateinit var bigImage: ImageView
@@ -16,8 +19,17 @@ class ImgViewActivity : AppCompatActivity() {
 
         bigImage = findViewById(R.id.bigImage)
 
-        val imageId = intent.getIntExtra("imageId",0)
-        bigImage.setImageResource(imageId)
-
+        val imageUri = intent.getParcelableExtra<Uri>("imageUri")
+        println(imageUri)
+        if (imageUri != null) {
+            Glide.with(this)
+                .load(imageUri)
+                .into(bigImage)
+        } else {
+            val imageId = intent.getIntExtra("imageId", 0)
+            if (imageId != 0) {
+                bigImage.setImageResource(imageId)
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,10 +43,10 @@ class ContactAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         var tv_name: TextView = itemView.findViewById(R.id.tvContactName)
         var tv_number: TextView = itemView.findViewById(R.id.tvContactNumber)
 
-        var btn_call: Button = itemView.findViewById(R.id.btnCall)
-        var btn_message: Button = itemView.findViewById(R.id.btnMessage)
-        var btn_edit: Button = itemView.findViewById(R.id.btnEdit)
-        var btn_share: Button = itemView.findViewById(R.id.btnShare)
+        var btn_call: ImageButton = itemView.findViewById(R.id.btnCall)
+        var btn_message: ImageButton = itemView.findViewById(R.id.btnMessage)
+        var btn_edit: ImageButton = itemView.findViewById(R.id.btnEdit)
+        var btn_share: ImageButton = itemView.findViewById(R.id.btnShare)
 
         fun bind(item: ContactData) {
             tv_name.text = item.name
