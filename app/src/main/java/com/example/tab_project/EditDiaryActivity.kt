@@ -26,11 +26,11 @@ class EditDiaryActivity : AppCompatActivity() {
     val diaryAdapter = DiaryAdapterSingleton.diaryAdapter // 글로벌 변수를 불러와서 사용
 
     val iconIds = intArrayOf(
-        R.drawable.img_1_right,
-        R.drawable.img_2_right,
-        R.drawable.img_3_right,
-        R.drawable.img_4_right,
-        R.drawable.img_5_right,
+        R.drawable.w_sunny,
+        R.drawable.w_sunnycloudy,
+        R.drawable.w_rainy,
+        R.drawable.w_snowy,
+        R.drawable.w_rainbow,
     )
 
     var new_iconId : Int? = null

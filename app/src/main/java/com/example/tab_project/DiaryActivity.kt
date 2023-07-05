@@ -44,8 +44,6 @@ class DiaryActivity : AppCompatActivity() {
         binding.rvDiary.adapter = diaryAdapter
         binding.rvDiary.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        SaveDiaryAdapter.init(applicationContext)
-
         //initializing dummy data
         if (diaryAdapter != null) {
             diaryAdapter.DiaryList = generateDiaryDataList()
@@ -90,7 +88,6 @@ class DiaryActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        SaveDiaryAdapter.loadDiary()
     }
 
     private fun openDiary(position: Int) {
