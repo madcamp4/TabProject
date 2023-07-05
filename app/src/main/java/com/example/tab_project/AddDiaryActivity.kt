@@ -44,6 +44,8 @@ class AddDiaryActivity : AppCompatActivity() {
             diaryAdapter.DiaryList.add(newDiaryData)
             diaryAdapter.notifyDataSetChanged()
 
+            //SaveDiaryAdapter.saveDiary()
+
             finish()
         }
 

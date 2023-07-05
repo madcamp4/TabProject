@@ -2,8 +2,10 @@ package com.example.tab_project
 
 import android.app.Activity
 import android.content.ClipData.Item
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -38,6 +40,7 @@ class DiaryActivity : AppCompatActivity() {
         binding.rvDiary.adapter = diaryAdapter
         binding.rvDiary.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
+        SaveDiaryAdapter.init(applicationContext)
 
         //initializing dummy data
         if (diaryAdapter != null) {
@@ -81,6 +84,11 @@ class DiaryActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        SaveDiaryAdapter.loadDiary()
+    }
+
     private fun openDiary(position: Int) {
         val openDiaryIntent = Intent(this, SingleDiaryActivity::class.java)
         openDiaryIntent.putExtra("position", position)
@@ -116,6 +124,7 @@ class DiaryActivity : AppCompatActivity() {
 
                     diaryAdapter.DiaryList[position].isFavorite = diaryAdapter.DiaryList[position].isFavorite == false
                     diaryAdapter.notifyItemChanged(position)
+                    //SaveDiaryAdapter.saveDiary()
                 }
             })
     }
@@ -145,6 +154,7 @@ class DiaryActivity : AppCompatActivity() {
                     toast("Deleted item $position")
                     diaryAdapter.DiaryList.removeAt(position)
                     diaryAdapter.notifyItemRemoved(position)
+                    //SaveDiaryAdapter.saveDiary()
                 }
             })
     }

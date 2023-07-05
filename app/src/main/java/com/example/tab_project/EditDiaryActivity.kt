@@ -65,6 +65,8 @@ class EditDiaryActivity : AppCompatActivity() {
             data.putExtra("editedIcon", new_iconId)
             setResult(RESULT_OK, data)
 
+            //SaveDiaryAdapter.saveDiary()
+
             finish()
         }
 
