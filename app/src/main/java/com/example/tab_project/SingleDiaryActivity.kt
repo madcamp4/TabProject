@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil.setContentView
 import com.bumptech.glide.Glide
 import com.example.tab_project.DiaryAdapterSingleton.diaryAdapter
@@ -21,6 +22,9 @@ class SingleDiaryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+        val backgroundColor = ContextCompat.getColor(this, R.color.white)
+        window.decorView.setBackgroundColor(backgroundColor)
 
         var position = 0
 
@@ -32,17 +36,17 @@ class SingleDiaryActivity : AppCompatActivity() {
 
         // 모든 view들이 일기의 정보를 보이도록 설정
         binding.apply {
-            tvDiaryDate.text = diaryData.date
+            tvTotalTitle.text = diaryData.date
             tvDiaryTitle.text = diaryData.title
             tvDiaryContent.text = diaryData.content
             Glide.with(this@SingleDiaryActivity).load(diaryData.icon).into(imageView)
         }
 
-        binding.btnReturn.setOnClickListener {
+        binding.btnCancelEntry.setOnClickListener {
             finish()
         }
 
-        binding.btnEdit.setOnClickListener {
+        binding.btnSaveEntry.setOnClickListener {
             val editDiaryIntent = Intent(this, EditDiaryActivity::class.java)
             editDiaryIntent.putExtra("position", position)
 

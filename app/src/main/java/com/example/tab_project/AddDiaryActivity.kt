@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.tab_project.databinding.ActivityAdddiaryBinding
 
 class AddDiaryActivity : AppCompatActivity() {
@@ -15,20 +16,26 @@ class AddDiaryActivity : AppCompatActivity() {
     val diaryAdapter = DiaryAdapterSingleton.diaryAdapter // 글로벌 변수를 불러와서 사용
 
     val iconIds = intArrayOf(
-        R.drawable.img_1_right,
-        R.drawable.img_2_right,
-        R.drawable.img_3_right,
-        R.drawable.img_4_right,
-        R.drawable.img_5_right,
+        R.drawable.w_sunny,
+        R.drawable.w_sunnycloudy,
+        R.drawable.w_rainy,
+        R.drawable.w_snowy,
+        R.drawable.w_rainbow,
     )
 
-    var new_iconId : Int? = null
+    var new_iconId : Int? = R.drawable.w_sunny
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar?.hide()
+        val backgroundColor = ContextCompat.getColor(this, R.color.white)
+        window.decorView.setBackgroundColor(backgroundColor)
+
         binding = ActivityAdddiaryBinding.inflate(layoutInflater) //activity.xml을 참조할 수 있도록 만든 binding class
         setContentView(binding.root)
+
+        binding.imageView.setImageResource( R.drawable.w_sunny)
 
         binding.btnCancelEntry.setOnClickListener {
             finish()
@@ -56,9 +63,9 @@ class AddDiaryActivity : AppCompatActivity() {
     }
 
     private fun showIconSelectionDialog() {
-        val iconOptions = arrayOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5") // Replace with your actual options
+        val iconOptions = arrayOf("☀️","🌤️","🌧️","🌨️","🌈")
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Select an icon")
+            .setTitle("오늘의 날씨")
             .setItems(iconOptions) { _, which ->
                 handleIconSelection(which)
             }

@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,9 @@ class DiaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar?.hide()
+        val backgroundColor = ContextCompat.getColor(this, R.color.white)
+        window.decorView.setBackgroundColor(backgroundColor)
         binding = ActivityDiaryBinding.inflate(layoutInflater) //activity.xml을 참조할 수 있도록 만든 binding class
         setContentView(binding.root)
 
@@ -97,6 +101,7 @@ class DiaryActivity : AppCompatActivity() {
         toast("opening position $position")
 
         startActivity(openDiaryIntent)
+        //addDiaryContract.launch(openDiaryIntent) //일기 하나들 보는 창으로 이동
     }
 
     private fun editDiary(position: Int) {
@@ -163,28 +168,44 @@ class DiaryActivity : AppCompatActivity() {
         val diaryDataList = mutableListOf<DiaryData>()
 
         val titles = listOf(
-            "Title 1",
-            "Title 2",
-            "Title 3",
-            "Title 4",
-            "Title 5",
-            "Title 6",
-            "Title 7",
-            "Title 8"
+            "새로운 도전!!",
+            "친구들과 논날~",
+            "운동의 즐거움",
+            "주륵주륵 비 오는날..",
+            "가족과 함께한 저녁",
         )
 
         val contents = listOf(
-            "Content line 1\nContent line 2",
-            "Content line 1\nContent line 2\nContent line 3",
-            "Content line 1\nContent line 2\nContent line 3\nContent line 4"
+            "오늘은 새로운 프로젝트에 도전했다. 처음부터 끝까지 열심히 해낼 수 있을 것 같아서 기대가 크다. 힘들지만 흥미로운 도전이 될 것 같아 기분이 좋다.",
+            "오늘은 오랜만에 친구들과의 모임이 있었다. 함께 맛있는 음식을 먹으며 이야기를 나누고 웃을 수 있어서 정말 행복했다. 소중한 사람들과 함께 시간을 보낼 수 있어서 감사하다.",
+            "오늘은 운동을 하러 체육관에 갔다. 오랜만에 몸을 움직이니 기분이 좋아졌고, 운동 후의 상쾌한 느낌은 참 좋다. 건강한 습관을 유지하며 자신을 가꾸는 것이 중요하다는 생각이 들었다.",
+            "오늘은 비가 와서 집에서 조용히 시간을 보냈다. 창밖으로 비를 보며 커피 한 잔 마시는 것이 너무 편안하다. 그래도 내일은 맑은 날씨가 되기를 바라며 기대하고 있다.",
+            "오늘은 가족과 함께 저녁을 먹으며 소중한 대화를 나눴다. 가족들과의 시간은 언제나 특별하고 소중하다. 서로의 이야기를 공유하고 웃을 수 있어서 행복한 하루였다."
         )
 
-        for (i in 1..8) {
-            val date = "00/00/00"
-            val title = titles[i - 1]
+        val dates = listOf(
+            "2023년 7월 1일",
+            "2023년 7월 2일",
+            "2023년 7월 3일",
+            "2023년 7월 4일",
+            "2023년 7월 5일"
+        )
+
+        val imageIcon = listOf(
+            R.drawable.w_sunny,
+            R.drawable.w_sunnycloudy,
+            R.drawable.w_rainy,
+            R.drawable.w_snowy,
+            R.drawable.w_rainbow,
+        )
+
+        for (i in 0..4) {
+
+            val title = titles[i]
             val content = contents[i % contents.size]
-            val diaryData = DiaryData(date, title, content, R.drawable.img_1_right)
+            val diaryData = DiaryData(dates[i], titles[i], contents[i], imageIcon[i])
             diaryDataList.add(diaryData)
+
         }
 
         return diaryDataList

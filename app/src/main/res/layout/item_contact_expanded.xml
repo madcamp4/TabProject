@@ -110,5 +110,4 @@
             app:layout_constraintEnd_toStartOf="@+id/btnMessage" />
     </LinearLayout>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

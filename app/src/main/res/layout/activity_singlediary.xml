@@ -6,38 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".SingleDiaryActivity">
 
+    <TextView
+        android:id="@+id/tvTotalTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="00월 00일"
+        style="@style/Text.TitleStyle"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
     <ImageButton
-        android:id="@+id/btnReturn"
+        android:id="@+id/btnCancelEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/diary_x"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
         android:contentDescription="현재 작성하고 있는 일기 취소"/>
 
-    <Button
-        android:id="@+id/btnEdit"
+    <ImageButton
+        android:id="@+id/btnSaveEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수정"
+        android:text="저장"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/diary_e"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="현재 작성하고 있는 일기 저장"/>
 
-    <TextView
-        android:id="@+id/tvDiaryDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:ems="10"
-        android:inputType="date"
-        android:hint="날짜를 입력하세요"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:minWidth="48dp"
-        android:minHeight="48dp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tvDiaryDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="116dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="date"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="15dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.208"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:minWidth="48dp"-->
+<!--        android:minHeight="48dp"/>-->
 
     <TextView
         android:id="@+id/tvDiaryTitle"
@@ -45,24 +76,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="제목을 입력하세요"
+        style="@style/Text.TitleStyle"
         android:inputType="text"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiaryDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalTitle"
         android:minWidth="48dp"
         android:minHeight="48dp"/>
 
     <TextView
         android:id="@+id/tvDiaryContent"
-        android:layout_width="324dp"
-        android:layout_height="219dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="50dp"
         android:ems="10"
+        style="@style/Text.TitleStyle"
+        android:textSize="20dp"
         android:gravity="start|top"
-        android:hint="내용을 기록하세요"
         android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDiaryTitle" />
@@ -71,12 +108,11 @@
         android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="49dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvDiaryDate"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvDiaryTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalTitle"
         tools:srcCompat="@tools:sample/avatars" />
 
 

@@ -1,12 +1,19 @@
 package com.example.tab_project
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import androidx.core.content.ContextCompat
 import com.example.tab_project.databinding.ActivityAdddiaryBinding
 import com.example.tab_project.databinding.ActivityEditdiaryBinding
 
@@ -30,6 +37,10 @@ class EditDiaryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.hide()
+        val backgroundColor = ContextCompat.getColor(this, R.color.white)
+        window.decorView.setBackgroundColor(backgroundColor)
 
         binding = ActivityEditdiaryBinding.inflate(layoutInflater) //activity.xml을 참조할 수 있도록 만든 binding class
         setContentView(binding.root)
@@ -76,9 +87,10 @@ class EditDiaryActivity : AppCompatActivity() {
     }
 
     private fun showIconSelectionDialog() {
-        val iconOptions = arrayOf("Option 1", "Option 2", "Option 3", "Option 3", "Option 3") // Replace with your actual options
+
+        val iconOptions = arrayOf("☀️","🌤️","🌧️","🌨️","🌈")
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Select an icon")
+            .setTitle("오늘의 날씨")
             .setItems(iconOptions) { _, which ->
                 handleIconSelection(which)
             }

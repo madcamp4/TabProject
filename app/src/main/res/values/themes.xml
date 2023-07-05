@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.Tab_project" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Text.TitleStyle" parent="android:TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/font_rs</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 </resources>

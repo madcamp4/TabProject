@@ -18,6 +18,7 @@ class ImgViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_imageview)
 
         bigImage = findViewById(R.id.bigImage)
+        supportActionBar?.hide()
 
         val imageUri = intent.getParcelableExtra<Uri>("imageUri")
         println(imageUri)
