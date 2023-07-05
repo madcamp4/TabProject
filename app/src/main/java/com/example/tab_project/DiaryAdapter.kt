@@ -15,6 +15,7 @@ class DiaryAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
 
     lateinit var DiaryList : MutableList<DiaryData>
 
+    var isdisplayFavorites : Boolean = false
 
     override fun getItemViewType(position: Int): Int {
         return DiaryList[position].viewMode
@@ -40,15 +41,21 @@ class DiaryAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val diaryData = if (isdisplayFavorites) {
+            DiaryList.filter { it.isFavorite }[position]
+        } else {
+            DiaryList[position]
+        }
+
         when(getItemViewType(position)) {
             SHORT -> {
-                (holder as ShortViewHolder).bind(DiaryList[position])
+                (holder as ShortViewHolder).bind(diaryData)
             }
             FULL -> {
-                (holder as FullViewHolder).bind(DiaryList[position])
+                (holder as FullViewHolder).bind(diaryData)
             }
             else -> {
-                (holder as SwipedViewHolder).bind(DiaryList[position])
+                (holder as SwipedViewHolder).bind(diaryData)
             }
         }
 
@@ -71,7 +78,10 @@ class DiaryAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
     override fun getItemCount(): Int {
-        return DiaryList.size
+        return if (isdisplayFavorites) {
+            DiaryList.count { it.isFavorite }
+        }
+        else DiaryList.size
     }
 
     open inner class ShortViewHolder(view: View) : RecyclerView.ViewHolder(view) {

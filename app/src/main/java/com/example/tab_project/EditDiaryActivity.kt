@@ -38,6 +38,8 @@ class EditDiaryActivity : AppCompatActivity() {
 
         val diaryData = diaryAdapter.DiaryList[position]
 
+        new_iconId = diaryData.icon // 만일 아이콘이 수정되지 않으면 그대로
+
         // 모든 view들이 일기의 정보를 보이도록 설정
         binding.apply {
             etDiaryDate.setText(diaryData.date)

@@ -1,6 +1,7 @@
 package com.example.tab_project
 
 import android.app.Activity
+import android.content.ClipData.Item
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,9 +21,10 @@ import java.time.LocalDate
 class DiaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryBinding
     lateinit var diaryAdapter: DiaryAdapter
+    lateinit var swipeHelper: ItemTouchHelper
 
     //private lateinit var addDiaryContract: ActivityResultLauncher<Intent>
-    private lateinit var editDiaryContract: ActivityResultLauncher<Intent>
+    //private lateinit var editDiaryContract: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,11 @@ class DiaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.switchFavorites.setOnCheckedChangeListener { _ , isChecked ->
+            diaryAdapter.isdisplayFavorites = isChecked
+            diaryAdapter.notifyDataSetChanged()
+        }
+
         // 클릭시 일기 메인 페이지로 이동
         if (diaryAdapter != null) {
             diaryAdapter.setItemClickListener(object: DiaryAdapter.OnItemClickListener {
@@ -59,7 +66,7 @@ class DiaryActivity : AppCompatActivity() {
             })
         }
 
-        val itemTouchHelper = ItemTouchHelper(object: SwipeHelper(binding.rvDiary) {
+        swipeHelper = ItemTouchHelper(object: SwipeHelper(binding.rvDiary) {
             override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
                 val deleteButton = deleteButton(position)
                 val editButton = editButton(position)
@@ -70,41 +77,8 @@ class DiaryActivity : AppCompatActivity() {
                 return buttons
             }
         })
-        itemTouchHelper.attachToRecyclerView(binding.rvDiary)
+        swipeHelper.attachToRecyclerView(binding.rvDiary)
 
-
-        // adddiary activity가 끝난 이후에 해당 페이지에서 얻은 데이터를 통해 데이터셋에 넣음
-//        addDiaryContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ) { result ->
-//            if (result.resultCode == Activity.RESULT_OK) { //activity가 제대로 종료되었으면 안에 있는 코드 실행
-//                val newDiaryData = DiaryData(
-//                    result.data?.getStringExtra("date"),
-//                    result.data?.getStringExtra("title"),
-//                    result.data?.getStringExtra("content"),
-//                    result.data?.getIntExtra("icon", 0))
-//
-//                if (diaryAdapter != null) {
-//                    diaryAdapter.DiaryList.add(newDiaryData)
-//                    diaryAdapter.notifyDataSetChanged()
-//                }
-//            }
-//        }
-
-        editDiaryContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) { //activity가 제대로 종료되었으면 안에 있는 코드 실행
-                val newDiaryData = DiaryData(
-                    result.data?.getStringExtra("date"),
-                    result.data?.getStringExtra("title"),
-                    result.data?.getStringExtra("content"),
-                    result.data?.getIntExtra("icon", 0))
-
-                val position = result.data?.getIntExtra("position", 0)
-
-                if (diaryAdapter != null) {
-                    diaryAdapter.DiaryList[position!!] = newDiaryData
-                    diaryAdapter.notifyItemChanged(position)
-                }
-            }
-        }
     }
 
     private fun openDiary(position: Int) {
@@ -115,7 +89,6 @@ class DiaryActivity : AppCompatActivity() {
         toast("opening position $position")
 
         startActivity(openDiaryIntent)
-        //addDiaryContract.launch(openDiaryIntent) //일기 하나들 보는 창으로 이동
     }
 
     private fun editDiary(position: Int) {
@@ -139,8 +112,10 @@ class DiaryActivity : AppCompatActivity() {
             android.R.color.holo_green_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    toast("Marked as hearted item $position")
-                    diaryAdapter.DiaryList[position].isFavorite = true
+                    toast("Marked $position th item as favorite")
+
+                    diaryAdapter.DiaryList[position].isFavorite = diaryAdapter.DiaryList[position].isFavorite == false
+                    diaryAdapter.notifyItemChanged(position)
                 }
             })
     }

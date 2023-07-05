@@ -47,6 +47,8 @@ abstract class SwipeHelper(private val recyclerView: RecyclerView) : ItemTouchHe
         }
     }
 
+
+
     private fun drawButtons(
         canvas: Canvas,
         buttons: List<UnderlayButton>,
@@ -176,6 +178,7 @@ abstract class SwipeHelper(private val recyclerView: RecyclerView) : ItemTouchHe
                 }
             }
         }
+
     }
     //endregion
 }
