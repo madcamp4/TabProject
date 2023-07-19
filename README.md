@@ -18,11 +18,8 @@
 
 # 캡쳐 화면
 
-1번째 탭
-![image](https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e)
-
-2번째 탭
-![image](https://github.com/madcamp4/TabProject/assets/86272865/311dd939-58e8-4aad-b646-76e3c6be82ca)
-
-3번째 탭
-![image](https://github.com/madcamp4/TabProject/assets/86272865/5da30033-2f03-4f4d-a8d3-35b2e646a7a1)
+<p align="center">
+<image src="https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e" width="250" height="500" /> 
+<image src="https://github.com/madcamp4/TabProject/assets/86272865/311dd939-58e8-4aad-b646-76e3c6be82ca" width="250" height="500" />
+<image src="https://github.com/madcamp4/TabProject/assets/86272865/5da30033-2f03-4f4d-a8d3-35b2e646a7a1" width="250" height="500" />
+</p>
