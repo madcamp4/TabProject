@@ -14,9 +14,11 @@
 ## 화면 소개
 
 ####  1번째 탭
-- 휴대폰 안에 연락처를 받아와서 전화번호부 형태로 띄움, 전화/문자/전화번호부 수정 기능 구현
+- 휴대폰 안에 연락처를 받아와서 전화번호부를 띄워줌 (사진은 연락처를 직접 추가한 상태)
+- 전화/문자/전화번호부 수정 기능 구현
 <p align="center">
-<image src="https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e"/> 
+<image src="https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e" width="250" height="500"/> 
+<image src="https://github.com/madcamp4/week1/assets/86272865/23eec32c-64d9-4d56-a6ca-1aff1c6bfc29" width="250" height="500"/> 
 </p>
 
  #### 2번째 탭
