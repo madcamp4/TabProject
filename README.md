@@ -22,7 +22,8 @@
 </p>
 
  ### 2번째 탭
-  - 로컬 내 저장된 사진들이랑 카메라로 찍은 사진들을 갤러리 형태로 띄움, 사진 하트 기능/확대 기능 구현
+  - 로컬 내 저장된 사진들이랑 카메라로 찍은 사진들을 갤러리 형태로 띄움
+  - 사진 하트 기능/확대 기능 구현
 <p align="center">
  <image src="https://github.com/madcamp4/week1/assets/86272865/70902d40-59fd-48e0-aa27-50908d3080fb" width="250" height="500"/>
  <image src="https://github.com/madcamp4/week1/assets/86272865/de25bd4e-7d4e-48aa-b461-cbd69bdd7a8d" width="250" height="500"/>
