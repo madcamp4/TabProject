@@ -1,25 +1,38 @@
-# 🖥️ 프로젝트명 
-```
-  3개의 탭 + 나만의 일기장
-```
+# My TabProject 
+  > 몰입캠프 1주차 과제
+  - Android Studio + Kotlin 사용해보기
+  - 3개의 탭 구조를 갖는 어플리케이션 개발하기
 
-# 팀원
-- 최수연
-- 윤인규
+## 개발 팀원
+- 최수연 (숙명여대 컴퓨터과학전공)
+- 윤인규 (카이스트 전산학부)
 
-# 프로젝트 내용
-  안드로이드 스튜디오에서 kotlin을 사용하여 3개의 탭을 가진 앱<br/><br/>
-  1번째 탭: 휴대폰 안에 연락처를 받아와서 전화번호부 형태로 띄움, 전화/문자/전화번호부 수정 기능 구현<br/>
-  2번째 탭: 로컬 내 저장된 사진들이랑 카메라로 찍은 사진들을 갤러리 형태로 띄움, 사진 하트 기능/확대 기능 구현<br/>
-  3번째 탭: 나만의 일기장 구현<br/>
-    - 일기장 추가/수정/삭제 기능 (스와이프)<br/>
-    - 하트 클릭한 일기는 토글 버튼을 눌러 따로 모아보기<br/>
+## 개발 환경
+- Language: Kotlin
+- IDE: Android Studio
 
+## 화면 소개
 
-# 캡쳐 화면
+####  1번째 탭
+- 휴대폰 안에 연락처를 받아와서 전화번호부 형태로 띄움, 전화/문자/전화번호부 수정 기능 구현
+<p align="center">
+<image src="https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e"/> 
+</p>
+
+ #### 2번째 탭
+  - 로컬 내 저장된 사진들이랑 카메라로 찍은 사진들을 갤러리 형태로 띄움, 사진 하트 기능/확대 기능 구현
+ <p align="center">
+ <image src="https://github.com/madcamp4/TabProject/assets/86272865/311dd939-58e8-4aad-b646-76e3c6be82ca"/>
+ </p>
+  
+ #### 3번째 탭
+  - 나만의 일기장 구현
+    - 일기장 추가/수정/삭제 기능 (+ 스와이프 구현)
+    - 하트한 일기는 따로 모아볼 수 있음
 
 <p align="center">
-<image src="https://github.com/madcamp4/TabProject/assets/86272865/80d8d3c5-9384-4b9e-ad72-94e8be720b2e" width="250" height="500" /> 
-<image src="https://github.com/madcamp4/TabProject/assets/86272865/311dd939-58e8-4aad-b646-76e3c6be82ca" width="250" height="500" />
-<image src="https://github.com/madcamp4/TabProject/assets/86272865/5da30033-2f03-4f4d-a8d3-35b2e646a7a1" width="250" height="500" />
+<image src="https://github.com/madcamp4/week1/assets/86272865/d7223962-8ca9-42df-9569-d0e727f5a5b4" width="250" height="500" / >
+<image src="https://github.com/madcamp4/week1/assets/86272865/dd75e90f-365b-436c-a0da-2cc1f1ebff2b" width="250" height="500" / >
+<image src="https://github.com/madcamp4/week1/assets/86272865/447337bc-dd09-4168-90c8-ae52dca94634" width="250" height="500" / >
+<image src="https://github.com/madcamp4/week1/assets/86272865/c9c38f28-7c9e-411e-aca5-2087d8cfa724" width="250" height="500" / >
 </p>
