@@ -13,7 +13,7 @@
 
 ## 화면 소개
 
-####  1번째 탭
+###  1번째 탭
 - 휴대폰 안에 연락처를 받아와서 전화번호부를 띄워줌 (사진은 연락처를 직접 추가한 상태)
 - 전화 걸기/문자 보내기/전화번호부 수정 기능 구현
 <p align="center">
@@ -21,14 +21,14 @@
 <image src="https://github.com/madcamp4/week1/assets/86272865/23eec32c-64d9-4d56-a6ca-1aff1c6bfc29" width="250" height="500"/> 
 </p>
 
- #### 2번째 탭
+ ### 2번째 탭
   - 로컬 내 저장된 사진들이랑 카메라로 찍은 사진들을 갤러리 형태로 띄움, 사진 하트 기능/확대 기능 구현
 <p align="center">
  <image src="https://github.com/madcamp4/week1/assets/86272865/70902d40-59fd-48e0-aa27-50908d3080fb" width="250" height="500"/>
  <image src="https://github.com/madcamp4/week1/assets/86272865/de25bd4e-7d4e-48aa-b461-cbd69bdd7a8d" width="250" height="500"/>
 </p>
   
- #### 3번째 탭
+ ### 3번째 탭
   - 나만의 일기장 구현
     - 일기장 추가/수정/삭제 기능 (+ 스와이프 구현)
     - 하트한 일기는 따로 모아볼 수 있음
